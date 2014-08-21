@@ -13,7 +13,7 @@ angular.module('slonoed.daterange', [])
             s.setMilliseconds(0);
             s.setMinutes(0);
             s.setHours(0);
-            return f.getTime() == s.getTime();
+            return f.getTime() === s.getTime();
         };
 
         this.isBefore = function(f, s) {
@@ -51,7 +51,8 @@ angular.module('slonoed.daterange', [])
             replace: true,
             scope: {
                 'startDateRaw': '=start',
-                'endDateRaw': '=finish'
+                'endDateRaw': '=finish',
+                'onApply' : '&'
             },
             transclude: true,
             templateUrl: 'daterange.html',
@@ -63,6 +64,9 @@ angular.module('slonoed.daterange', [])
                     scope.startDateRaw = scope.startDate.toDate();
                     scope.endDateRaw = scope.endDate.toDate();
                     scope.active = false;
+                    if(scope.onApply) {
+                        scope.onApply.apply();
+                    }
                 };
 
                 scope.clearRange = function() {
@@ -71,7 +75,7 @@ angular.module('slonoed.daterange', [])
 
                     // if end date not start of day - get next day start timestamp
                     if (!scope.endDate.isSame(scope.endDate.startOf('day'))) {
-                        scope.endDate = scope.endDate.add(1, 'day').startOf('day');
+                        scope.endDate = scope.endDate.add(1 ,'day').startOf('day');
                     }
                 };
 
@@ -95,12 +99,12 @@ angular.module('slonoed.daterange', [])
     .directive('slCalendar', ['slDateProcessor', function(dateProcessor) {
         var locale = {
             applyLabel: 'Apply',
-            clearLabel: "Clear",
+            clearLabel: 'Clear',
             fromLabel: 'From',
             toLabel: 'To',
             weekLabel: 'W',
             customRangeLabel: 'Custom Range',
-            daysOfWeek: moment().localeData()._weekdaysMin, 
+            daysOfWeek: moment().localeData()._weekdaysMin,
             monthNames: moment().localeData()._monthsShort,
             firstDay: 0
         };
@@ -114,8 +118,8 @@ angular.module('slonoed.daterange', [])
             }
 
             var firstDay = moment([year, month, 1]);
-            var lastMonth = moment(firstDay).subtract('month', 1).month();
-            var lastYear = moment(firstDay).subtract('month', 1).year();
+            var lastMonth = moment(firstDay).subtract(1, 'month').month();
+            var lastYear = moment(firstDay).subtract(1, 'month').year();
 
             var daysInLastMonth = moment([lastYear, lastMonth]).daysInMonth();
 
@@ -138,12 +142,12 @@ angular.module('slonoed.daterange', [])
             }
 
             var curDate;
-            if (side == 'right') {
+            if (side === 'right') {
                 curDate = moment([lastYear, lastMonth, startDay]).endOf('day');
             } else {
                 curDate = moment([lastYear, lastMonth, startDay]).startOf('day');
             }
-            for (var i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add('day', 1)) {
+            for (var i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(1, 'day')) {
                 if (i > 0 && col % 7 == 0) {
                     col = 0;
                     row++;
@@ -163,7 +167,8 @@ angular.module('slonoed.daterange', [])
             replace: true,
             scope: {
                 startDate: '=sdate',
-                endDate: '=edate'
+                endDate: '=edate',
+                onApply : '&'
             },
             templateUrl: 'calendar.html',
             link: function(scope, element, attrs) {
@@ -188,7 +193,7 @@ angular.module('slonoed.daterange', [])
                 scope.updateCalendar = function() {
                     var calendar = buildCalendar(scope.current.month(), scope.current.years(), 1);
                     scope.calendar = calendar;
-                    scope.monthName = locale.monthNames[scope.current.month()] + scope.current.format(" YYYY");
+                    scope.monthName = locale.monthNames[scope.current.month()] + scope.current.format(' YYYY"');
                 };
 
 
@@ -223,14 +228,14 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.setPrevMonth = function() {
-                    scope.current.subtract('month', 1);
+                    scope.current.subtract(1, 'month');
                     scope.updateCalendar();
                 };
                 scope.setNextMonth = function() {
-                    scope.current.add('month', 1);
+                    scope.current.add(1, 'month');
                     scope.updateCalendar();
                 };
 
             }
         };
-    }])
+    }]);
