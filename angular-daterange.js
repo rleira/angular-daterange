@@ -52,6 +52,7 @@ angular.module('slonoed.daterange', [])
             scope: {
                 'startDateRaw': '=start',
                 'endDateRaw': '=finish',
+                'toClose' : '=toClose',
                 'onApply' : '&'
             },
             transclude: true,
@@ -93,6 +94,12 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.clearRange();
+
+                scope.$watch('toClose', function() {
+                    if(scope.toClose) {
+                        scope.active = false;
+                    }
+                });
             }
         };
     }])
@@ -127,8 +134,8 @@ angular.module('slonoed.daterange', [])
 
             //initialize a 6 rows x 7 columns array for the calendar
             var calendar = [];
-            for (var i = 0; i < 6; i++) {
-                calendar[i] = [];
+            for (var j = 0; j < 6; j++) {
+                calendar[j] = [];
             }
 
             //populate the calendar with date objects
@@ -137,7 +144,7 @@ angular.module('slonoed.daterange', [])
                 startDay -= 7;
             }
 
-            if (dayOfWeek == locale.firstDay) {
+            if (dayOfWeek === locale.firstDay) {
                 startDay = daysInLastMonth - 6;
             }
 
@@ -148,7 +155,7 @@ angular.module('slonoed.daterange', [])
                 curDate = moment([lastYear, lastMonth, startDay]).startOf('day');
             }
             for (var i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(1, 'day')) {
-                if (i > 0 && col % 7 == 0) {
+                if (i > 0 && col % 7 === 0) {
                     col = 0;
                     row++;
                 }
@@ -200,10 +207,10 @@ angular.module('slonoed.daterange', [])
                 scope.isActive = function(day) {
                     // on left calendar check with startDate, on right - with endDate
                     if (scope.left) {
-                        return dateProcessor.isSame(day, scope.startDate)
+                        return dateProcessor.isSame(day, scope.startDate);
                     }
                     else {
-                        return dateProcessor.isSame(day, scope.endDate)
+                        return dateProcessor.isSame(day, scope.endDate);
                     }
                 };
 
