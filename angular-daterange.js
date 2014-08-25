@@ -53,18 +53,19 @@ angular.module('slonoed.daterange', [])
                 'startDateRaw': '=start',
                 'endDateRaw': '=finish',
                 'toClose' : '=toClose',
+                'ngModel' : '=ngModel',
                 'onApply' : '&'
             },
             transclude: true,
             templateUrl: 'daterange.html',
             link: function(scope, element, attrs) {
-                scope.active = false;
+                scope.ngModel = false;
 
 
                 scope.apply = function() {
                     scope.startDateRaw = scope.startDate.toDate();
                     scope.endDateRaw = scope.endDate.toDate();
-                    scope.active = false;
+                    scope.ngModel = false;
                     if(scope.onApply) {
                         scope.onApply.apply();
                     }
@@ -82,13 +83,13 @@ angular.module('slonoed.daterange', [])
 
                 scope.cancel = function() {
                     scope.clearRange();
-                    scope.active = false;
+                    scope.ngModel = false;
                 };
 
                 scope.toggle = function() {
-                    scope.active = !scope.active;
+                    scope.ngModel = !scope.ngModel;
                     // update date after open
-                    if (scope.active) {
+                    if (scope.ngModel) {
                         scope.clearRange();
                     }
                 };
@@ -97,9 +98,11 @@ angular.module('slonoed.daterange', [])
 
                 scope.$watch('toClose', function() {
                     if(scope.toClose) {
-                        scope.active = false;
+                        scope.ngModel = false;
                     }
                 });
+
+
             }
         };
     }])
