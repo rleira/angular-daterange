@@ -52,7 +52,6 @@ angular.module('slonoed.daterange', [])
             scope: {
                 'startDateRaw': '=start',
                 'endDateRaw': '=finish',
-                'toClose' : '=toClose',
                 'ngModel' : '=ngModel',
                 'onApply' : '&'
             },
@@ -95,13 +94,6 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.clearRange();
-
-                scope.$watch('toClose', function() {
-                    if(scope.toClose) {
-                        scope.ngModel = false;
-                    }
-                });
-
 
             }
         };
