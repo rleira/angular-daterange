@@ -53,6 +53,8 @@ angular.module('slonoed.daterange', [])
                 'startDateRaw': '=start',
                 'endDateRaw': '=finish',
                 'ngModel' : '=ngModel',
+                'minDate' : '=minDate',
+                'maxDate' : '=maxDate',
                 'onApply' : '&'
             },
             transclude: true,
@@ -169,8 +171,7 @@ angular.module('slonoed.daterange', [])
             replace: true,
             scope: {
                 startDate: '=sdate',
-                endDate: '=edate',
-                onApply : '&'
+                endDate: '=edate'
             },
             templateUrl: 'calendar.html',
             link: function(scope, element, attrs) {
@@ -187,7 +188,7 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.isOff = function(day) {
-                    var anotherMonth = day.month() != scope.current.month();
+                    var anotherMonth = day.month() !== scope.current.month();
                     var beforeStartInRight = !scope.left && dateProcessor.isBefore(day, scope.startDate);
                     return anotherMonth || beforeStartInRight;
                 };
@@ -209,6 +210,15 @@ angular.module('slonoed.daterange', [])
                     }
                 };
 
+                scope.isDisabled = function(day) {
+                    if(scope.$parent.minDate && dateProcessor.isBefore(day, scope.$parent.minDate)) {
+                        return true;
+                    }
+                    if(scope.$parent.maxDate && dateProcessor.isAfter(day, scope.$parent.maxDate)) {
+                        return true;
+                    }
+                    return false;
+                };
 
                 scope.locale = locale;
                 scope.daysOfWeek = moment().localeData()._weekdaysMin;
@@ -222,6 +232,13 @@ angular.module('slonoed.daterange', [])
                     if (!scope.left && date.isBefore(scope.startDate)) {
                         return;
                     }
+                    if(date.isBefore(scope.$parent.minDate)) {
+                        return;
+                    }
+                    if(date.isAfter(scope.$parent.maxDate)) {
+                        return;
+                    }
+
                     if (scope.left && dateProcessor.isAfter(date, scope.endDate)) {
                         scope.startDate = date;
                         scope.endDate = scope.startDate.clone().add(1, 'day');
