@@ -211,10 +211,10 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.isDisabled = function(day) {
-                    if(scope.$parent.minDate && dateProcessor.isBefore(day, scope.$parent.minDate)) {
+                    if(scope.$parent.minDate && moment(day).isBefore(scope.$parent.minDate)) {
                         return true;
                     }
-                    if(scope.$parent.maxDate && dateProcessor.isAfter(day, scope.$parent.maxDate)) {
+                    if(scope.$parent.maxDate && moment(day).isAfter(scope.$parent.maxDate)) {
                         return true;
                     }
                     return false;
