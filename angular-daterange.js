@@ -62,7 +62,6 @@ angular.module('slonoed.daterange', [])
             link: function(scope, element, attrs) {
                 scope.ngModel = false;
 
-
                 scope.apply = function() {
                     scope.startDateRaw = scope.startDate.toDate();
                     scope.endDateRaw = scope.endDate.toDate();
@@ -107,8 +106,6 @@ angular.module('slonoed.daterange', [])
             clearLabel: 'Clear',
             fromLabel: 'From',
             toLabel: 'To',
-            weekLabel: 'W',
-            customRangeLabel: 'Custom Range',
             daysOfWeek: moment().localeData()._weekdaysMin,
             monthNames: moment().localeData()._monthsShort,
             firstDay: 0
