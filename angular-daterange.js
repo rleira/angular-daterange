@@ -249,7 +249,6 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.$on('calendarToggle', function(event, ngModel) {
-                    console.log("Into Calendar " + moment(scope.$parent.startDateRaw).month() + "/" + moment(scope.$parent.startDateRaw).year());
                     if (ngModel) {
                         if (scope.left) {
                             scope.current = moment([moment(scope.$parent.startDateRaw).year(), moment(scope.$parent.startDateRaw).month(), 1]);
