@@ -89,6 +89,7 @@ angular.module('slonoed.daterange', [])
 
                 scope.toggle = function() {
                     scope.ngModel = !scope.ngModel;
+                    scope.$broadcast('calendarToggle', scope.ngModel ? true : false);
                     // update date after open
                     if (scope.ngModel) {
                         scope.clearRange();
@@ -115,7 +116,7 @@ angular.module('slonoed.daterange', [])
 
         var calendars = {};
 
-        function buildCalendar(month, year, side) {
+        function buildCalendar(month, year) {
             var cacheKey = month + ' + ' + year;
             if (calendars[cacheKey]) {
                 return calendars[cacheKey];
@@ -145,12 +146,7 @@ angular.module('slonoed.daterange', [])
                 startDay = daysInLastMonth - 6;
             }
 
-            var curDate;
-            if (side === 'right') {
-                curDate = moment([lastYear, lastMonth, startDay]).endOf('day');
-            } else {
-                curDate = moment([lastYear, lastMonth, startDay]).startOf('day');
-            }
+            var curDate = moment([lastYear, lastMonth, startDay]).startOf('day');
             for (var i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(1, 'day')) {
                 if (i > 0 && col % 7 === 0) {
                     col = 0;
@@ -177,7 +173,6 @@ angular.module('slonoed.daterange', [])
             link: function(scope, element, attrs) {
                 scope.left = attrs.left === '';
 
-
                 scope.inRange = function(date) {
                     return (dateProcessor.isAfter(date, scope.startDate) && dateProcessor.isBefore(date, scope.endDate)) ||
                         dateProcessor.isSame(date, scope.startDate) || dateProcessor.isSame(date, scope.endDate);
@@ -194,8 +189,7 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.updateCalendar = function() {
-                    var calendar = buildCalendar(scope.current.month(), scope.current.years(), 1);
-                    scope.calendar = calendar;
+                    scope.calendar = buildCalendar(scope.current.month(), scope.current.years());
                     scope.monthName = locale.monthNames[scope.current.month()] + scope.current.format(' YYYY');
                 };
 
@@ -222,7 +216,6 @@ angular.module('slonoed.daterange', [])
 
                 scope.locale = locale;
                 scope.daysOfWeek = moment().localeData()._weekdaysMin;
-
 
                 scope.current = moment([scope.startDate.year(), scope.startDate.month(), 1]);
 
@@ -255,6 +248,19 @@ angular.module('slonoed.daterange', [])
                     scope.updateCalendar();
                 };
 
+                scope.$on('calendarToggle', function(event, ngModel) {
+                    console.log("Into Calendar " + moment(scope.$parent.startDateRaw).month() + "/" + moment(scope.$parent.startDateRaw).year());
+                    if (ngModel) {
+                        if (scope.left) {
+                            scope.current = moment([moment(scope.$parent.startDateRaw).year(), moment(scope.$parent.startDateRaw).month(), 1]);
+                            scope.calendar = buildCalendar(moment(scope.$parent.startDateRaw).month(), moment(scope.$parent.startDateRaw).year());
+                        } else {
+                            scope.current = moment([moment(scope.$parent.endDateRaw).year(), moment(scope.$parent.endDateRaw).month(), 1]);
+                            scope.calendar = buildCalendar(moment(scope.$parent.endDateRaw).month(), moment(scope.$parent.endDateRaw).year());
+                        }
+                        scope.monthName = locale.monthNames[scope.current.month()] + scope.current.format(' YYYY');
+                    }
+                });
             }
         };
     }]);
