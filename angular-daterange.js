@@ -88,7 +88,6 @@ angular.module('slonoed.daterange', [])
 
                 scope.toggle = function() {
                     scope.ngModel = !scope.ngModel;
-                    scope.$broadcast('calendarToggle', scope.ngModel ? true : false);
                     // update date after open
                     if (scope.ngModel) {
                         scope.clearRange();
@@ -97,6 +96,10 @@ angular.module('slonoed.daterange', [])
 
                 scope.clearRange();
 
+                scope.$watch('ngModel', function() {
+                    scope.clearRange();
+                    scope.$broadcast('calendarToggle', scope.ngModel ? true : false);
+                });
             }
         };
     }])
