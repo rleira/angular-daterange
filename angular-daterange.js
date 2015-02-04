@@ -189,7 +189,7 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.updateCalendar = function() {
-                    scope.calendar = buildCalendar(scope.current.month(), scope.current.years());
+                    scope.calendar = buildCalendar(scope.current.month(), scope.current.year());
                     scope.monthName = locale.monthNames[scope.current.month()] + scope.current.format(' YYYY');
                 };
 
