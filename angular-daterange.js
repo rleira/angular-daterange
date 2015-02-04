@@ -161,7 +161,7 @@ angular.module('slonoed.daterange', [])
         }
 
 
-        var DATE_FORMAT = 'yyyy/M/dd';
+        var DATE_FORMAT = 'YYYY/M/dd';
 
         return {
             restrict: 'E',
@@ -226,10 +226,10 @@ angular.module('slonoed.daterange', [])
                     if (!scope.left && date.isBefore(scope.startDate)) {
                         return;
                     }
-                    if(date.isBefore(moment(scope.$parent.minDate, DATE_FORMAT))) {
+                    if(date.isBefore(scope.$parent.minDate)) {
                         return;
                     }
-                    if(date.isAfter(moment(scope.$parent.maxDate, DATE_FORMAT))) {
+                    if(date.isAfter(scope.$parent.maxDate)) {
                         return;
                     }
 
