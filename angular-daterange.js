@@ -161,6 +161,7 @@ angular.module('slonoed.daterange', [])
         }
 
 
+        var DATE_FORMAT = 'yyyy/M/dd';
 
         return {
             restrict: 'E',
@@ -205,10 +206,10 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.isDisabled = function(day) {
-                    if(scope.$parent.minDate && moment(day).isBefore(scope.$parent.minDate)) {
+                    if(scope.$parent.minDate && moment(day).isBefore(moment(scope.$parent.minDate, DATE_FORMAT))) {
                         return true;
                     }
-                    if(scope.$parent.maxDate && moment(day).isAfter(scope.$parent.maxDate)) {
+                    if(scope.$parent.maxDate && moment(day).isAfter(moment(scope.$parent.maxDate, DATE_FORMAT))) {
                         return true;
                     }
                     return false;
