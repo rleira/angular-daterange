@@ -226,10 +226,10 @@ angular.module('slonoed.daterange', [])
                     if (!scope.left && date.isBefore(scope.startDate)) {
                         return;
                     }
-                    if(date.isBefore(moment(scope.$parent.minDate, DATE_FORMAT))) {
+                    if(scope.$parent.minDate && date.isBefore(moment(scope.$parent.minDate, DATE_FORMAT))) {
                         return;
                     }
-                    if(date.isAfter(moment(scope.$parent.maxDate, DATE_FORMAT))) {
+                    if(scope.$parent.maxDate && date.isAfter(moment(scope.$parent.maxDate, DATE_FORMAT))) {
                         return;
                     }
 
