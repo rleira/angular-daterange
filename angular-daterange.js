@@ -161,7 +161,7 @@ angular.module('slonoed.daterange', [])
         }
 
 
-        var DATE_FORMAT = 'yyyy-mm-dd';
+        var DATE_FORMAT = 'YYYY-mm-dd';
 
         return {
             restrict: 'E',
