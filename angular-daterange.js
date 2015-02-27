@@ -55,6 +55,7 @@ angular.module('slonoed.daterange', [])
                 'ngModel' : '=ngModel',
                 'minDate' : '=minDate',
                 'maxDate' : '=maxDate',
+                'fixedStartDate' : '=fixedStartDate',
                 'onApply' : '&'
             },
             transclude: true,
@@ -223,6 +224,9 @@ angular.module('slonoed.daterange', [])
                 scope.updateCalendar();
 
                 scope.pickDate = function(date) {
+                    if (scope.left && scope.$parent.fixedStartDate) {
+                       return;
+                    }
                     if (!scope.left && date.isBefore(scope.startDate)) {
                         return;
                     }
