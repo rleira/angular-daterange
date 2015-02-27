@@ -207,6 +207,9 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.isDisabled = function(day) {
+                    if(scope.left && scope.fixedStartDate) {
+                        return true;
+                    }
                     if(scope.$parent.minDate && moment(day).isBefore(moment(scope.$parent.minDate, DATE_FORMAT))) {
                         return true;
                     }
@@ -225,7 +228,7 @@ angular.module('slonoed.daterange', [])
 
                 scope.pickDate = function(date) {
                     if (scope.left && scope.$parent.fixedStartDate) {
-                       return;
+                        return;
                     }
                     if (!scope.left && date.isBefore(scope.startDate)) {
                         return;
