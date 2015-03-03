@@ -222,7 +222,8 @@ angular.module('slonoed.daterange', [])
                 scope.locale = locale;
                 scope.daysOfWeek = moment().localeData()._weekdaysMin;
 
-                scope.current = moment([scope.startDate.year(), scope.startDate.month(), 1]);
+                var forCurrent = scope.startDate || moment();
+                scope.current = moment([forCurrent.year(), forCurrent.month(), 1]);
 
                 scope.updateCalendar();
 
