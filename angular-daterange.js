@@ -68,7 +68,10 @@ angular.module('slonoed.daterange', [])
                     scope.endDateRaw = scope.endDate.toDate();
                     scope.ngModel = false;
                     if(scope.onApply) {
-                        scope.onApply.apply();
+                        //Use timeout in order to get access to start & end dates inside the apply function
+                        setTimeout(function () {
+                            scope.onApply.apply();
+                        }, 0);
                     }
                 };
 
