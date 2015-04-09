@@ -56,7 +56,8 @@ angular.module('slonoed.daterange', [])
                 'minDate' : '=minDate',
                 'maxDate' : '=maxDate',
                 'fixedStartDate' : '=fixedStartDate',
-                'onApply' : '&'
+                'onApply' : '&',
+                'ngDisabled': '='
             },
             transclude: true,
             templateUrl: 'daterange.html',
@@ -91,10 +92,12 @@ angular.module('slonoed.daterange', [])
                 };
 
                 scope.toggle = function() {
-                    scope.ngModel = !scope.ngModel;
-                    // update date after open
-                    if (scope.ngModel) {
-                        scope.clearRange();
+                    if (!scope.ngDisabled) {
+                        scope.ngModel = !scope.ngModel;
+                        // update date after open
+                        if (scope.ngModel) {
+                            scope.clearRange();
+                        }
                     }
                 };
 
