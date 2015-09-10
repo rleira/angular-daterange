@@ -1,0 +1,28 @@
+<div class="calendar">
+    <table class="table-condensed">
+        <thead>
+        <tr>
+            <th class="prev available" ng-click="setPrevMonth()">
+                <i class="icon-arrow-left"></i>
+            </th>
+            <th colspan="5" style="width: auto">{{monthName}}</th>
+            <th class="next available" ng-click="setNextMonth()">
+                <i class="icon-arrow-right"></i>
+            </th>
+        </tr>
+        <tr>
+            <th ng-repeat="d in daysOfWeek">{{d}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="week in calendar">
+            <td class="available"
+                ng-click="pickDate(day)"
+                ng-repeat="day in week"
+                ng-class="{off: isOff(day),  inrange:inRange(day), active: isActive(day)}">
+                {{getDayNumber(day)}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

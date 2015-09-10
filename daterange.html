@@ -1,0 +1,13 @@
+<div class="daterangepicker-container">
+    <div ng-transclude ng-click="toggle()" style="cursor:pointer"></div>
+    <div class="daterangepicker dropdown-menu opensright" ng-show="active">
+        <sl-calendar sdate="startDate" edate="endDate" right></sl-calendar>
+        <sl-calendar sdate="startDate" edate="endDate" left></sl-calendar>
+        <div class="confirm">
+            <button class="btn btn-success btn-small" ng-click="apply()">
+                Apply
+            </button>
+            <button class="btn btn-small" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</div>
