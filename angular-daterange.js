@@ -60,7 +60,7 @@ angular.module('slonoed.daterange', [])
                 'ngDisabled': '='
             },
             transclude: true,
-            templateUrl: '../daterange.html',
+            templateUrl: 'daterange.html',
             link: function(scope, element, attrs) {
                 scope.ngModel = false;
 
@@ -177,7 +177,7 @@ angular.module('slonoed.daterange', [])
                 startDate: '=sdate',
                 endDate: '=edate'
             },
-            templateUrl: '../calendar.html',
+            templateUrl: 'calendar.html',
             link: function(scope, element, attrs) {
                 scope.left = attrs.left === '';
 
