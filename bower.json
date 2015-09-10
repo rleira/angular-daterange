@@ -4,7 +4,7 @@
   "description": "Angular directive for date range picker",
   "license": "MIT",
   "homepage": "https://github.com/rleira/angular-daterange",
-  "main": "angular-datarange.js",
+  "main": "angular-daterange.js",
   "keywords": [
     "date",
     "datepicker",
